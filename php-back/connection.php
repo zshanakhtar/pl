@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost:3307","root","","feedback");
+$conn = mysqli_connect("localhost:3306","root","","labassignment");
 
 
 ?>
