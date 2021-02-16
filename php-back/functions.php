@@ -19,6 +19,9 @@ function insertintodb($table,$data){
 function errordisplay($error_main,$error_desc){
     echo '<div class="alert alert-danger"><strong>'.$error_main.'!</strong> '.$error_desc.'</div>';
 }
+function successdisplay($success_main,$success_desc){
+    echo '<div class="alert alert-success"><strong>'.$success_main.'!</strong> '.$success_desc.'</div>';
+}
 function inputvalidate($mode,$data){
     $flag=0;
     if($mode=='max-length')

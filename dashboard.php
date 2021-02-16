@@ -1,5 +1,5 @@
 <?php
-$canvas_heading='Dashboard - Feedback and Grievance Management System';
+$canvas_heading='Dashboard';
 session_start();
 if(!isset($_SESSION['usertype'])) { // if already login
   header("location: index.php");
@@ -13,9 +13,9 @@ else{
         $menu_items=array('approve'=>'Approve Users','accesscode'=>'Generate Access Code','create'=>'Create New User');
         $canvas_paint=$usertype.'/approve.php';
     }
-    else if($usertype=='s')
+    else if($usertype=='e')
     {
-        $menu_heading="Student";
+        $menu_heading="Editor";
         $menu_items=array('feedback'=>'Feedback','past'=>'Past Feedback');
         $canvas_paint=$usertype.'/feedback.php';
     }

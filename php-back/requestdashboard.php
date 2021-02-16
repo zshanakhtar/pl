@@ -16,8 +16,8 @@ $resultsum=mysqli_query($conn,"SELECT userstatus,usertype,pass FROM regist WHERE
 	if($row = $resultsum->fetch_assoc())
 	{
 			extract($row);
-			// echo $l_password;
-			// echo $pass;
+			echo $l_password;
+			echo $pass;
 			if($userstatus=='f')
 			{
 				errordisplay($error_main,'Account not activated, contact administrator.');

@@ -4,9 +4,9 @@
 	<div class="panel-heading" data-toggle="collapse" data-target="#one" style="font-size:150%;"><b>Fill your details</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
 	<div  class="panel-body collapse in one" id="one">
 		<div class="row form-group">
-			<label for="univ_roll" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">University Roll No</label>
+			<label for="username" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Username</label>
 			<div class="col-sm-10">
-				<input id="univ_roll" name="univ_roll" type="text" class="form-control" required />
+				<input id="username" name="username" type="text" class="form-control" required />
 			</div>
 		</div>
 		<div class="row form-group">
@@ -23,20 +23,16 @@
 			</div>
 		</div>
 		<div class="row form-group">
-			<label for="dep" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Department</label>
+			<label for="usertype" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Usertype</label>
 			<div class="col-sm-10">
-				<select required class="form-control" id="dep" name="dep">
+				<select required class="form-control" id="usertype" name="usertype">
 					<option value="">--Select--</option>
-					<option value="CSE">Computer Science and Engineering</option>
-					<option value="IT">Information Technology</option>
-					<option value="CE">Civil Engineering</option>
+					<option value="e">Editor</option>
+					<option value="t">Technology Reporter</option>
+					<option value="s">Sports Reporter</option>
+					<option value="f">Trailer Reporter</option>
+					<option value="a">Administrator</option>
 				</select>
-			</div>
-		</div>
-		<div class="row form-group">
-			<label for="access_code" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Access code</label>
-			<div class="col-sm-10">
-				<input id="access_code" name="access_code" type="text" class="form-control" required />
 			</div>
 		</div>
 		
@@ -45,7 +41,7 @@
 			     <button type="submit" class="btn btn-warning col-sm-8 col-sm-offset-2">
 					<span class="glyphicon glyphicon-floppy-disk"></span>
 					<br class="hidden-lg hidden-sm hidden-xs">					
-					<span class="hidden-sm">Get Token</span>
+					<span class="hidden-sm">Register</span>
 				 </button>
 			</div>
 		</div>
