@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     if($error_desc!='success')
     errordisplay($error_main,$error_desc);
     $hashandsalt = password_hash($pass, PASSWORD_BCRYPT);//hash password
-    echo $hashandsalt;
+    // echo $hashandsalt;
     $data=array('username'=>$username,'pass'=>$hashandsalt,'usertype'=>$usertype);
     //errordisplay($error_main,'Registration disabled.');//Enable this to close registration during development
     if(insertintodb('regist',$data))
