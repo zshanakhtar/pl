@@ -16,14 +16,26 @@ else{
     else if($usertype=='e')
     {
         $menu_heading="Editor";
-        $menu_items=array('feedback'=>'Feedback','past'=>'Past Feedback');
-        $canvas_paint=$usertype.'/feedback.php';
+        $menu_items=array('view'=>'View Headlines','new'=>'Submit New Headline');
+        $canvas_paint=$usertype.'/view.php';
     }
     else if($usertype=='t')
     {
-        $menu_heading="Faculty";
-        $menu_items=array('feedback'=>'View Feedback','past'=>'View Past Feedback');
-        $canvas_paint=$usertype.'/feedback.php';
+        $menu_heading="Technology";
+        $menu_items=array('view'=>'View Headlines','new'=>'Submit New Headline');
+        $canvas_paint=$usertype.'/view.php';
+    }
+    else if($usertype=='f')
+    {
+        $menu_heading="Trailer";
+        $menu_items=array('view'=>'View Headlines','new'=>'Submit New Headline');
+        $canvas_paint=$usertype.'/view.php';
+    }
+    else if($usertype=='s')
+    {
+        $menu_heading="Sports";
+        $menu_items=array('view'=>'View Headlines','new'=>'Submit New Headline');
+        $canvas_paint=$usertype.'/view.php';
     }
 }
 
@@ -34,7 +46,7 @@ else{
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feedback Portal - Mark, Analyse and Review Feedbacks and Grievances</title>
+<title>Lab Assignment</title>
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -46,13 +58,10 @@ else{
 
 <!-- universal css -->
 <link rel="stylesheet" href="css/universal.css">
-<!-- index css -->
-<link rel="stylesheet" href="css/index.css">
 
 <!-- universal js -->
 <script src="js/universal.js"></script>
-<!-- index js -->
-<script src="js/index.js"></script>
+
 </head>
 <?php
 include "php-back/"."connection.php"; //connect the connection page
