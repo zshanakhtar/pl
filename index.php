@@ -31,8 +31,6 @@ else{
 
 <!-- universal css -->
 <link rel="stylesheet" href="css/universal.css">
-<!-- index css -->
-<link rel="stylesheet" href="css/index.css">
 
 <!-- universal js -->
 <script src="js/universal.js"></script>
