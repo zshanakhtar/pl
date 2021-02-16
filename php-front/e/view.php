@@ -1,6 +1,6 @@
 <?php
 
-$query="SELECT feedback_code from access WHERE access_code='CSEb5b37d'";
+$query="SELECT headline from editorial";
 // echo $FILLteam;
 $resultaccess=mysqli_query($conn,$query);
 
@@ -28,19 +28,21 @@ extract($_SESSION);
             <thead>
                 <tr>
                     <th>S. No.</th>
-                    <th>Feedback Code</th>
-                    <th>Action</th>
+                    <th>Headline</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
 <?php
+$count=0;
 while($rowaccess = $resultaccess->fetch_assoc())
 {
+    $count++;
 ?>
                 <tr>
-                    <?php $feedback_code = htmlspecialchars($rowaccess['feedback_code']);?>
-                    <td>1</td>
-                    <td><?php echo $feedback_code; ?></td>
+                    <?php $headline = htmlspecialchars($rowaccess['headline']);?>
+                    <td><?php echo $count; ?></td>
+                    <td><?php echo $headline; ?></td>
                     <td class="playground">
                         <button type="submit" class="btn btn-danger z-optionbtn" data-target=".z-optionbox.z-i0" style="float:left;">
                             <span class="glyphicon glyphicon-cog"></span>
