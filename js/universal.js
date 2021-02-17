@@ -10,6 +10,16 @@ $.fn.fragmentLoader=function(){
         $('#'+fragment).ajaxReload("get",requester,module);
     });
   }
+
+$.fn.submoduleLoader=function(){
+    var elem=this;
+    $(elem).on('click',function(){
+        
+        console.log(elem);
+        //$('#'+fragment).ajaxReload("get",requester,data);
+    });
+  }
+
 $.fn.ajaxReload= function(urltype,url,data){
     var elem=this;
     $.ajax({
@@ -25,21 +35,3 @@ $.fn.ajaxReload= function(urltype,url,data){
         } 
     });
 }
-
-$.fn.zoption= function(){
-    var elem=this;
-    $(elem).on('click',function(){
-        var target=$(elem).data('target');
-        $(target).toggle();
-        
-        // var fragment=$(this).closest('ul').data('fragment');
-        // var module=fragment+'='+$(this).data(fragment);
-        // $('#'+fragment).ajaxReload("get",fragment,module);
-    });
-}
-$(window).on('click',function(event){
-    if($(event.target).closest(".z-optionbtn").length==0)
-    {
-      $(".z-optionbox").hide();
-    }
-  });
