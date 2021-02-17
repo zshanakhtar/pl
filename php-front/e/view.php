@@ -18,14 +18,14 @@ extract($_SESSION);
             </thead>
             <tbody>
 <?php
-$count=0;
+$headline_sno=0;
 while($rowaccess = $resultaccess->fetch_assoc())
 {
-    $count++;
+    $headline_sno++;
 ?>
                 <tr>
                     <?php $headline = htmlspecialchars($rowaccess['headline']);?>
-                    <td><?php echo $count;?></td>
+                    <td><?php echo $headline_sno;?></td>
                     <td><?php echo $headline; ?></td>
                     <td>
                         <button type="submit" class="btn btn-xs btn-warning">
@@ -42,3 +42,14 @@ while($rowaccess = $resultaccess->fetch_assoc())
         </table>
     </div>
 </div>
+
+
+<div class="panel panel-info">
+	<div class="panel-heading text-center" data-toggle="collapse" data-target="#editheadline" style="font-size:150%;"><b>View Headlines</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
+	<div  class="panel-body collapse in one" id="editheadline">
+    </div>
+</div>
+
+<script>
+$('')
+</script>
