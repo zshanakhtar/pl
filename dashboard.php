@@ -6,7 +6,7 @@ if(!isset($_SESSION['usertype'])) { // if already login
 }
 else{
     extract($_SESSION);
-    $nav_type='login';
+    $nav_type='logout';
     if($usertype=='a')
     {
         $menu_heading="Administrator";
