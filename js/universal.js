@@ -6,6 +6,7 @@ $.fn.fragmentLoader=function(){
         var requester=$(this).closest('ul').data('requester');
         var fragment=$(this).closest('ul').data('fragment');
         var module=fragment+'='+$(this).data(fragment);
+        console.log(requester+","+module);
         $('#'+fragment).ajaxReload("get",requester,module);
     });
   }
@@ -17,7 +18,6 @@ $.fn.ajaxReload= function(urltype,url,data){
         data: data,
         success: function(response){ 
             $(elem).html(response);
-            //handle returned arrayList
         },
         error: function(e){  
             alert("error");
