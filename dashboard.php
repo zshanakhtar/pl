@@ -10,7 +10,7 @@ else{
     if($usertype=='a')
     {
         $menu_heading="Administrator";
-        $menu_items=array('approve'=>'Approve Users','accesscode'=>'Generate Access Code','create'=>'Create New User');
+        $menu_items=array('approve'=>'Approve Users','create'=>'Create New User');
         $canvas_paint=$usertype.'/approve.php';
     }
     else if($usertype=='e')
