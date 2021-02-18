@@ -15,6 +15,21 @@ function insertintodb($table,$data){
         return true;
     else
         return false;
+    $conn->close();
+}
+function updatedb($table,$data,$sno){
+    include "../php-back/".'connection.php';
+    $flag_update_statement=0;
+    foreach($data as $x => $x_value){
+        // echo $x."\n";
+        // echo $x_value."\n";
+        $stmt = $conn->prepare("UPDATE $table SET $x = ? WHERE sno='$sno'");
+        $stmt->bind_param("s", $x_value);
+        $flag_update_statement = $stmt->execute()?$flag_update_statement+1:$flag_update_statement;
+        $stmt->close();
+    }
+    return ($flag_update_statement==sizeof($data));
+    $conn->close();
 }
 function errordisplay($error_main,$error_desc){
     echo '<div class="alert alert-danger"><strong>'.$error_main.'!</strong> '.$error_desc.'</div>';
