@@ -20,9 +20,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $table='followsports';
     else if($usertype=='f')
         $table='trailer';
+    else if($usertype=='a')
+        $table='regist';
     
     if(updatedb($table,$data,$sno))
-        successdisplay('Updated Successfully','Headline successfully updated in '.$table);
+        successdisplay('Updated Successfully','Data successfully updated in '.$table);
     else
         errordisplay($error_main,'Server Error, please try again later.');
 
