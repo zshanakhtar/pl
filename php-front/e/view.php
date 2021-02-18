@@ -1,5 +1,5 @@
 <?php
-$query="SELECT sno,headline from editorial";
+$query="SELECT sno,headline,paper,article_link from editorial";
 $resultaccess=mysqli_query($conn,$query);
 ?>
 <?php
@@ -13,7 +13,9 @@ extract($_SESSION);
                 <tr>
                     <th>S. No.</th>
                     <th>Headline</th>
-                    <th>Edit</th>
+                    <th>Paper</th>
+                    <th>Article Link</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,12 +24,13 @@ $headline_sno=0;
 while($rowaccess = $resultaccess->fetch_assoc())
 {
     $headline_sno++;
-    $headline = htmlspecialchars($rowaccess['headline']);
-    $sno = htmlspecialchars($rowaccess['sno']);
+    extract($rowaccess);
 ?>
                 <tr>
                     <td><?php echo $headline_sno;?></td>
                     <td><?php echo $headline; ?></td>
+                    <td><?php echo $paper; ?></td>
+                    <td><?php echo $article_link; ?></td>
                     <td>
                         <button data-request="submodule" data-fragment="edit" data-edit="<?php echo $sno;?>" class="btn btn-xs btn-warning z-btn">
 					        <span class="glyphicon glyphicon-pencil"></span>
@@ -53,21 +56,5 @@ while($rowaccess = $resultaccess->fetch_assoc())
 </div>
 
 <script>
-    // $(".ajaxsubmitform").on('submit',function(e) {
-    //     var formid=$(this).attr('id');//get this form's id
-    //     alert(formid);
-    //     e.preventDefault(); // avoid to execute the actual submit of the form.
-	//     setTimeout(function(e){ //wait 50ms to allow validator to execute
-    //         // var data1=$("#"+formid).serialize()+"&flag"+formid+"=Y";
-	//         // alert($("#"+formid).find('.has-error').length);//No of errors in the form
-    //         if($("#"+formid).find('.has-error').length==0) 
-    //         {
-    //             var data= $("#"+formid).serialize();
-    //             alert(data);
-    //             //$('#editheadline').ajaxReload("get",formid,data);
-    //         }
-    //     }, 50);
-    // });
-
     $(".z-btn").submoduleLoader();
 </script>
