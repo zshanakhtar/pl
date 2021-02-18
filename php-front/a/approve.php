@@ -1,30 +1,60 @@
-<div class="panel panel-danger">
-    <div class="panel-heading">Applications</div>
-    <div class="panel-body z-submenu">
-        <ul class="nav nav-tabs" data-requester='trinket' data-fragment="approvet">
-            <li class="active" data-approvet="CSE"><a data-toggle="tab">CSE<span class="btn btn-xs btn-danger" id="pr0_count"></span></a></li>
-            <li data-approvet="IT"><a data-toggle="tab">IT<span class="btn btn-xs btn-danger" id="pr1_count"></span></a></li>
-            <li data-approvet="ME"><a data-toggle="tab">ME<span class="btn btn-xs btn-danger" id="pr2_count"></span></a></li>
-            <li data-approvet="CE"><a data-toggle="tab">CE<span class="btn btn-xs btn-danger" id="pr3_count"></span></a></li>
-            <li data-approvet="EN"><a data-toggle="tab">EN<span class="btn btn-xs btn-danger" id="pr4_count"></span></a></li>
-            <li data-approvet="EC"><a data-toggle="tab">EC<span class="btn btn-xs btn-danger" id="pr5_count"></span></a></li>
-        </ul>
-        <div id="approvet" class="tab-content">
-            <?php
-            
-            ?>
-        </div>
-    </div>
-</div>
-<div class="panel panel-danger">
-    <div class="panel-heading" data-toggle="collapse" data-target="#playground" style="font-size:150%;"><b>Playground</b><span class="btn btn-danger pull-right glyphicon glyphicon-chevron-up"></span></div>
-    <div  class="panel-body collapse in viewsegue" id="playground">
-        <h1 style="margin-left:100px;">
-            Select an application to proceed
-        </h1>
+<?php
+$query="SELECT sno,username,userstatus,usertype from regist";
+$resultaccess=mysqli_query($conn,$query);
+?>
+<?php
+extract($_SESSION);
+?>
+<div class="panel panel-info">
+	<div class="panel-heading text-center" data-toggle="collapse" data-target="#headlines" style="font-size:150%;"><b>View Headlines</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
+	<div  class="panel-body collapse in one" id="headlines">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>S. No.</th>
+                    <th>Username</th>
+                    <th>Usertype</th>
+                    <th>Userstatus</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+<?php
+$display_sno=0;
+while($rowaccess = $resultaccess->fetch_assoc())
+{
+    $display_sno++;
+    extract($rowaccess);
+?>
+                <tr>
+                    <td><?php echo $display_sno;?></td>
+                    <td><?php echo $username; ?></td>
+                    <td><?php echo $usertype; ?></td>
+                    <td><?php echo $userstatus; ?></td>
+                    <td>
+                        <button data-request="submodule" data-fragment="edit" data-edit="<?php echo $sno;?>" class="btn btn-xs btn-warning z-btn">
+					        <span class="glyphicon glyphicon-pencil"></span>
+					        <br class="hidden-lg hidden-sm hidden-xs">					
+					        <span class="hidden-sm">Edit</span>
+				        </button>
+                    </td>
+                </tr>
+<?php 
+}
+?>
+            </tbody>
+        </table>
     </div>
 </div>
 
-  <script>
-      $( '.z-submenu' ).fragmentLoader();
-  </script>
+
+<div class="panel panel-info">
+	<div class="panel-heading text-center" data-toggle="collapse" data-target="#submodule" style="font-size:150%;"><b>Edit Headline</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
+	<div  class="panel-body collapse in one" id="submodule">
+        Select an item to edit
+    </div>
+</div>
+
+<script>
+    $(".z-btn").submoduleLoader();
+</script>
