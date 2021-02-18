@@ -68,10 +68,4 @@ function inputvalidate($mode,$data){
     }
     return $flag==0?true:false;
 }
-function generateaccesscode($access){
-    $bytes = random_bytes(3);
-    $code=bin2hex($bytes);
-    return $access.$code;
-}
-
 ?>
