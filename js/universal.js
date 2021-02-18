@@ -14,9 +14,11 @@ $.fn.fragmentLoader=function(){
 $.fn.submoduleLoader=function(){
     var elem=this;
     $(elem).on('click',function(){
-        
-        console.log(elem);
-        //$('#'+fragment).ajaxReload("get",requester,data);
+        var request=$(this).data('request');
+        var fragment=$(this).data('fragment');
+        var data=fragment+'='+$(this).data(fragment);
+        console.log(request+","+data);
+        $('#'+request).ajaxReload("get",request,data);
     });
   }
 
