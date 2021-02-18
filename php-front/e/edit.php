@@ -58,7 +58,7 @@ if($rowaccess = $resultaccess->fetch_assoc())
             if($("#"+formid).find('.has-error').length==0) 
             {
                 var data= $("#"+formid).serialize();
-                alert(data);
+                //alert(data);
                 $('#response').ajaxReload("submit",formid,data);
             }
         }, 50);
