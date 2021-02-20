@@ -1,5 +1,5 @@
 <?php
-$query="SELECT sno,headline,paper,article_link from editorial";
+$query="SELECT sno,headline,author,sport,article_link from followsports";
 $resultaccess=mysqli_query($conn,$query);
 ?>
 <?php
@@ -13,7 +13,8 @@ extract($_SESSION);
                 <tr>
                     <th>S. No.</th>
                     <th>Headline</th>
-                    <th>Paper</th>
+                    <th>Author</th>
+                    <th>Sport</th>
                     <th>Article Link</th>
                     <th>Action</th>
                 </tr>
@@ -29,8 +30,9 @@ while($rowaccess = $resultaccess->fetch_assoc())
                 <tr>
                     <td><?php echo $headline_sno;?></td>
                     <td><?php echo $headline; ?></td>
-                    <td><?php echo $paper; ?></td>
-                    <td><?php echo $article_link; ?></td>
+                    <td><?php echo $author; ?></td>
+                    <td><?php echo $sport; ?></td>
+                    <td><?php echo "<a target='_blank' href='".$article_link."'>".$article_link."</a>" ; ?></td>
                     <td>
                         <button data-request="submodule" data-fragment="edit" data-edit="<?php echo $sno;?>" class="btn btn-xs btn-warning z-btn">
 					        <span class="glyphicon glyphicon-pencil"></span>

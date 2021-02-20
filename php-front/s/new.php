@@ -10,9 +10,15 @@
 			</div>
 		</div>
 		<div class="row form-group">
-			<label for="paper" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Paper</label>
+			<label for="author" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">author</label>
 			<div class="col-sm-10">
-				<input id="paper" name="paper" type="text" class="form-control" required />
+				<input id="author" name="author" type="text" class="form-control" required />
+			</div>
+		</div>
+		<div class="row form-group">
+			<label for="sport" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">sport</label>
+			<div class="col-sm-10">
+				<input id="sport" name="sport" type="text" class="form-control" required />
 			</div>
 		</div>
 		<div class="row form-group">
