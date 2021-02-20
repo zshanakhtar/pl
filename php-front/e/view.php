@@ -30,7 +30,7 @@ while($rowaccess = $resultaccess->fetch_assoc())
                     <td><?php echo $headline_sno;?></td>
                     <td><?php echo $headline; ?></td>
                     <td><?php echo $paper; ?></td>
-                    <td><?php echo $article_link; ?></td>
+                    <td><?php echo "<a target='_blank' href='".$article_link."'>".$article_link."</a>" ; ?></td>
                     <td>
                         <button data-request="submodule" data-fragment="edit" data-edit="<?php echo $sno;?>" class="btn btn-xs btn-warning z-btn">
 					        <span class="glyphicon glyphicon-pencil"></span>
