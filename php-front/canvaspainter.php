@@ -6,7 +6,7 @@
             <?php echo $canvas_heading;?>
         </div>
     </div>
-    <nav class="navbar z-menubar">
+    <nav class="navbar col-sm-11 z-menubar">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#"><?php echo $menu_heading;?></a>
@@ -18,7 +18,8 @@
             </ul>
         </div>
     </nav>
-    <div id="module">
+    <div class="col-sm-1"><button id="logout" class="btn btn-lg btn-danger <?php if($menu_heading=='Login') echo 'hidden';?>">Logout</button></div>
+    <div id="module" class="col-xs-12">
         <?php
         // $keys=array_keys($menu_items);
         // $canvas_paint=$menu_items[$keys[0]];
@@ -26,3 +27,8 @@
         ?>
     </div>
 </div>
+<script>
+    $('#logout').on('click',function(){
+        window.location="php-back/logout.php";
+    });
+</script>
