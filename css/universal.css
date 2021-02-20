@@ -50,8 +50,8 @@ body{
   }
 .z-canvas{
     min-height: 1000px;
-    background:linear-gradient(rgba(255,255,255,1),rgba(255,255,255,0));
-    /* background-color: white; */
+    /* background:linear-gradient(rgba(255,255,255,1),rgba(255,255,255,0)); */
+    background-color: white;
     box-shadow: 0px 5px 8px rgb(85, 0, 0);
     padding:10px;
 }
@@ -61,6 +61,7 @@ body{
     -webkit-clip-path: polygon(100% 65%, 0 65%, 0 91%, 100% 50%, 0 52%, 0 29%);
     clip-path: polygon(100% 65%, 0 65%, 0 91%, 100% 50%, 0 52%, 0 29%);
     background-color: rgb(22, 124, 190);
+    /* background-color: rgb(170, 57, 57); */
     z-index:-2;
     position: absolute;
     width: 100%;
@@ -70,30 +71,15 @@ body{
     -webkit-clip-path: polygon(100% 65%, 0 65%, 0 77%, 100% 50%, 0 52%, 0 41%);
     clip-path: polygon(100% 65%, 0 65%, 0 77%, 100% 50%, 0 52%, 0 41%);
     background-color: rgb(2, 40, 64);
+    /* background-color: rgb(85, 0, 0); */
     z-index:-1;
     position: absolute;
     width: 100%;
     min-height: 1000px;
 }
 
-.z-optionbox{
-    /* display:none; */
-    float:left;
-    position: absolute;
-    z-index:5;
-    background-color: #ffffff;
-    color:#000000;
-    list-style:none;
-    padding:0px;
-    margin:0px;
-    box-shadow: 5px 5px 5px #888888;
-}
-.z-option{
-    padding:8px;
-    text-align:center;
-}
-.z-option:hover{
-    background-color:#d9534f;
-    color:#ffffff;
-    cursor:pointer;
+.z-footer{
+    background-color: rgb(2, 40, 64);
+    color: rgb(255, 255, 255);
+    margin-top: 20px;
 }
