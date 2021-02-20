@@ -6,7 +6,7 @@ $resultaccess=mysqli_query($conn,$query);
 extract($_SESSION);
 ?>
 <div class="panel panel-info">
-	<div class="panel-heading text-center" data-toggle="collapse" data-target="#headlines" style="font-size:150%;"><b>View Headlines</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
+	<div class="panel-heading" data-toggle="collapse" data-target="#headlines" style="font-size:150%;"><b>Registered Users</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
 	<div  class="panel-body collapse in one" id="headlines">
         <table class="table table-bordered table-striped">
             <thead>
@@ -49,7 +49,7 @@ while($rowaccess = $resultaccess->fetch_assoc())
 
 
 <div class="panel panel-info">
-	<div class="panel-heading text-center" data-toggle="collapse" data-target="#submodule" style="font-size:150%;"><b>Edit Headline</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
+	<div class="panel-heading" data-toggle="collapse" data-target="#submodule" style="font-size:150%;"><b>Edit User Priviledges</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
 	<div  class="panel-body collapse in one" id="submodule">
         Select an item to edit
     </div>
