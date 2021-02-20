@@ -4,21 +4,27 @@
 	<div class="panel-heading" data-toggle="collapse" data-target="#one" style="font-size:150%;"><b>Fill your details</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
 	<div  class="panel-body collapse in one" id="one">
 		<div class="row form-group">
-			<label for="headline" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Headline</label>
+			<label for="title" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Title</label>
 			<div class="col-sm-10">
-				<input id="headline" name="headline" type="text" class="form-control" required />
+				<input id="title" name="title" type="text" class="form-control" required />
 			</div>
 		</div>
 		<div class="row form-group">
-			<label for="paper" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Paper</label>
+			<label for="producer" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Producer</label>
 			<div class="col-sm-10">
-				<input id="paper" name="paper" type="text" class="form-control" required />
+				<input id="producer" name="producer" type="text" class="form-control" required />
 			</div>
 		</div>
 		<div class="row form-group">
-			<label for="article_link" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Article Link</label>
+			<label for="director" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Director</label>
 			<div class="col-sm-10">
-				<input id="article_link" name="article_link" type="text" class="form-control" required />
+				<input id="director" name="director" type="text" class="form-control" required />
+			</div>
+		</div>
+		<div class="row form-group">
+			<label for="language" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Language</label>
+			<div class="col-sm-10">
+				<input id="language" name="language" type="text" class="form-control" required />
 			</div>
 		</div>
 		<div class="row form-group">

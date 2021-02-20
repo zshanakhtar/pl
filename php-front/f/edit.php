@@ -1,5 +1,5 @@
 <?php
-$query="SELECT headline,paper,article_link from editorial WHERE sno=$edit";
+$query="SELECT title,director,producer,language from trailer WHERE sno=$edit";
 $resultaccess=mysqli_query($conn,$query);
 if($rowaccess = $resultaccess->fetch_assoc())
 	extract($rowaccess);
@@ -17,21 +17,27 @@ if($rowaccess = $resultaccess->fetch_assoc())
 			</div>
 		</div>
 		<div class="row form-group">
-			<label for="headline" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Headline</label>
+			<label for="title" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Title</label>
 			<div class="col-sm-10">
-				<input id="headline" name="headline" type="text" value="<?php echo $headline; ?>" class="form-control" required />
+				<input id="title" name="title" type="text" value="<?php echo $title; ?>" class="form-control" required />
 			</div>
 		</div>
 		<div class="row form-group">
-			<label for="paper" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Paper</label>
+			<label for="producer" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Producer</label>
 			<div class="col-sm-10">
-				<input id="paper" name="paper" type="text" value="<?php echo $paper; ?>" class="form-control" required />
+				<input id="producer" name="producer" type="text" value="<?php echo $producer; ?>" class="form-control" required />
 			</div>
 		</div>
 		<div class="row form-group">
-			<label for="article_link" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Article Link</label>
+			<label for="director" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Director</label>
 			<div class="col-sm-10">
-				<input id="article_link" name="article_link" type="text" value="<?php echo $article_link; ?>" class="form-control" required />
+				<input id="director" name="director" type="text" value="<?php echo $director; ?>" class="form-control" required />
+			</div>
+		</div>
+		<div class="row form-group">
+			<label for="language" class="col-sm-2 control-label" style="color:#337ab7; font-size:14px">Language</label>
+			<div class="col-sm-10">
+				<input id="language" name="language" type="text" value="<?php echo $language; ?>" class="form-control" required />
 			</div>
 		</div>
 		<div class="row form-group">

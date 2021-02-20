@@ -1,5 +1,5 @@
 <?php
-$query="SELECT sno,headline,paper,article_link from editorial";
+$query="SELECT sno,title,director,producer,language from trailer";
 $resultaccess=mysqli_query($conn,$query);
 ?>
 <?php
@@ -12,9 +12,10 @@ extract($_SESSION);
             <thead>
                 <tr>
                     <th>S. No.</th>
-                    <th>Headline</th>
-                    <th>Paper</th>
-                    <th>Article Link</th>
+                    <th>Title</th>
+                    <th>Producer</th>
+                    <th>Director</th>
+                    <th>Language</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -28,9 +29,10 @@ while($rowaccess = $resultaccess->fetch_assoc())
 ?>
                 <tr>
                     <td><?php echo $headline_sno;?></td>
-                    <td><?php echo $headline; ?></td>
-                    <td><?php echo $paper; ?></td>
-                    <td><?php echo $article_link; ?></td>
+                    <td><?php echo $title; ?></td>
+                    <td><?php echo $producer; ?></td>
+                    <td><?php echo $director; ?></td>
+                    <td><?php echo $language; ?></td>
                     <td>
                         <button data-request="submodule" data-fragment="edit" data-edit="<?php echo $sno;?>" class="btn btn-xs btn-warning z-btn">
 					        <span class="glyphicon glyphicon-pencil"></span>
