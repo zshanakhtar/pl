@@ -1,3 +1,8 @@
+<?php
+$view_logout=1;
+if($menu_heading=='Login') 
+    $view_logout=0;
+?>
 <div class="z-background"></div>
 <div class="z-background2"></div>
 <div class="z-canvas col-sm-10 col-sm-offset-1">
@@ -6,7 +11,7 @@
             <?php echo $canvas_heading;?>
         </div>
     </div>
-    <nav class="navbar col-sm-11 z-menubar">
+    <nav class="navbar col-sm-<?php echo (12-$view_logout);?> z-menubar">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#"><?php echo $menu_heading;?></a>
@@ -18,7 +23,9 @@
             </ul>
         </div>
     </nav>
-    <div class="col-sm-1"><button id="logout" class="btn btn-lg btn-danger <?php if($menu_heading=='Login') echo 'hidden';?>">Logout</button></div>
+    <?php if($view_logout==1){?>
+    <div class="col-sm-1"><button id="logout" class="btn btn-lg btn-danger">Logout</button></div>
+    <?php } ?>
     <div id="module" class="col-xs-12">
         <?php
         // $keys=array_keys($menu_items);
