@@ -112,7 +112,7 @@ while($question_sno<5)
 </div>
 
 <script>
-    //$('.btn-select-q').addClass('disabled');
+    $('.btn-select-q').attr('disabled','disabled');
     $('.btn-select-q').addClass('available');
 
 
@@ -126,8 +126,17 @@ while($question_sno<5)
             $('.btn-select-q').addClass('available');
             console.log(response);
         }
-        if(response.result=="choose"){
-            $('.available').removeAttr('diabled');//activate available questions
+        else if(response.result=="turn"){
+            $('.available').removeAttr('disabled');//activate available questions
+        }
+        else if(response.result=="question"){
+            let data="table="+response.table+"&sno="+response.sno;
+            let button=$('input[value='+response.table+']').siblings('input[value='+response.sno+']').siblings('.btn');
+            button.attr('disabled','disabled');
+            button.addClass('btn-default');
+            button.removeClass('btn-warning');
+            button.removeClass('available');
+            $('#question').ajaxReload("get","question",data);//load question
         }
     };
     ws.onopen = () =>{
@@ -150,14 +159,23 @@ while($question_sno<5)
 
     $(".ajaxsubmitform").validator();
     $(".ajaxsubmitform").on('submit',function(e) {
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+        
         var form=$(this);//get this form
 
-        form.find('.btn').attr('disabled','true');
+        form.find('.btn').attr('disabled','disabled');
         form.find('.btn').addClass('btn-default');
         form.find('.btn').removeClass('btn-warning');
         form.find('.btn').removeClass('available');
+        var inputs=form.find('input');
+        var choose_payload={         
+            "action" :"choose",
+            "username" :"<?php echo $username?>",
+            "table": $(inputs[0]).attr('value'),
+            "sno": $(inputs[1]).attr('value')
+        };
+        ws.send(JSON.stringify(choose_payload));
 
-        e.preventDefault(); // avoid to execute the actual submit of the form.
 	    setTimeout(function(e){ //wait 50ms to allow validator to execute
             // var data1=$("#"+formid).serialize()+"&flag"+formid+"=Y";
 	        // alert($("#"+formid).find('.has-error').length);//No of errors in the form

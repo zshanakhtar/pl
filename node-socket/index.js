@@ -33,6 +33,10 @@ wsServer.on("request",request=>{
                 "result": "created"
             };//response payload
             connection.send(JSON.stringify(res_payload));
+            res_payload={
+                "result": "turn"
+            };//response payload
+            connection.send(JSON.stringify(res_payload));
         }
         else if(req.action === 'join')
         {
@@ -60,6 +64,18 @@ wsServer.on("request",request=>{
                     if(clients[i].username!==client.username)
                     clients[i].connection.send(JSON.stringify(res_payload));//send new client details to existing clients
                 }
+            }
+        }
+        else if(req.action=='choose'){
+            console.log(req);
+            for(var i=0;i<clients.length;i++){
+                var res_payload={
+                    "result":"question",
+                    "table":req.table,
+                    "sno":req.sno
+                };
+                if(clients[i].username!==req.username)
+                    clients[i].connection.send(JSON.stringify(res_payload));//send to other client this question ids
             }
         }
     });
