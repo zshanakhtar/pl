@@ -1,7 +1,7 @@
 <?php
 $canvas_heading='Dashboard';
 session_start();
-if(!isset($_SESSION['usertype'])) { // if already login
+if(!isset($_SESSION['usertype'])) { // if not already login
   header("location: index.php");
 }
 else{
