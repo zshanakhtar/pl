@@ -8,7 +8,7 @@ else{
   $usertype='n';
   $nav_type='login';
   $menu_heading='Login';
-  $menu_items=array('signin'=>'Sign In','register'=>'Register');
+  $menu_items=array('signin'=>'Sign In','register'=>'Register','jpcreate'=>'Jeopardy!');
   $canvas_paint=$usertype.'/signin.php';
 }
 
