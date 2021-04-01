@@ -8,6 +8,7 @@ httpServer.listen(9090,()=> console.log("Listening .. on 9090")) //
 
 var clients={};//hashmap of clienid and connection
 const games={};//hashmap which contains game id and no. of balls ,state of game
+var turn;
 
 const wsServer  = new websocketServer({        //the http socket is added to the websocket object
     "httpServer":httpServer
@@ -41,6 +42,12 @@ wsServer.on("request",request=>{
         else if(req.action === 'join')
         {
             gamecode=req.gamecode;
+            if(games[gamecode].clients.length==0){
+                turn={
+                    "username":req.username,
+                    "connection":connection
+                }
+            }
             if(games[gamecode].clients.length<6){
 
                 //console.log(games);
@@ -68,15 +75,19 @@ wsServer.on("request",request=>{
         }
         else if(req.action=='choose'){
             console.log(req);
-            for(var i=0;i<clients.length;i++){
-                var res_payload={
-                    "result":"question",
-                    "table":req.table,
-                    "sno":req.sno
-                };
-                if(clients[i].username!==req.username)
-                    clients[i].connection.send(JSON.stringify(res_payload));//send to other client this question ids
+            if(turn.username==req.username){
+                for(var i=0;i<clients.length;i++){
+                    var res_payload={
+                        "result":"question",
+                        "table":req.table,
+                        "sno":req.sno
+                    };
+                    clients[i].connection.send(JSON.stringify(res_payload));//send question id to all clients
+                }
             }
+        }
+        else if(req.action=='answer'){
+            console.log(req);
         }
     });
 });

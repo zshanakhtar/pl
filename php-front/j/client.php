@@ -122,9 +122,9 @@ while($question_sno<5)
     ws.onmessage = (message) => {
         //message coming from the server
         const response=JSON.parse(message.data); //extracting data from JSON message
+        console.log(response);
         if(response.result=="joined"){
             $('.btn-select-q').addClass('available');
-            console.log(response);
         }
         else if(response.result=="turn"){
             $('.available').removeAttr('disabled');//activate available questions
@@ -162,12 +162,8 @@ while($question_sno<5)
         e.preventDefault(); // avoid to execute the actual submit of the form.
         
         var form=$(this);//get this form
-
-        form.find('.btn').attr('disabled','disabled');
-        form.find('.btn').addClass('btn-default');
-        form.find('.btn').removeClass('btn-warning');
-        form.find('.btn').removeClass('available');
         var inputs=form.find('input');
+
         var choose_payload={         
             "action" :"choose",
             "username" :"<?php echo $username?>",
@@ -175,13 +171,5 @@ while($question_sno<5)
             "sno": $(inputs[1]).attr('value')
         };
         ws.send(JSON.stringify(choose_payload));
-
-	    setTimeout(function(e){ //wait 50ms to allow validator to execute
-            // var data1=$("#"+formid).serialize()+"&flag"+formid+"=Y";
-	        // alert($("#"+formid).find('.has-error').length);//No of errors in the form
-            var data= form.serialize();
-            // alert(data);
-            $('#question').ajaxReload("get","question",data);
-        }, 50);
     });
 </script>
