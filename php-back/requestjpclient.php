@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     extract($_POST);
 
     $username = mysqli_real_escape_string($conn, $username);//protection of sql injection replaces special characters with respective escape sequences
-
+    $_SESSION['usertype']='j';
     if($gamecode!="")
     {
     	$gamecode = mysqli_real_escape_string($conn, $gamecode);

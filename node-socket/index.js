@@ -88,6 +88,44 @@ wsServer.on("request",request=>{
         }
         else if(req.action=='answer'){
             console.log(req);
+            const mysql = require('mysql');
+
+            var con =mysql.createConnection({
+                host:"localhost",
+                user:"root",
+                password:"",
+                database:"labassignment"
+            });
+            con.connect(function(err){
+                if(err) throw err;
+                console.log("connected");
+                var field="headline";
+                if(req.table=="editorial")
+                    field="paper";
+                else if(req.table=="followsports")
+                    field="sport";
+                else if(req.table=="technology")
+                    field="category";
+                else if(req.table=="trailer")
+                    field="language";
+                sql="SELECT "+field+" FROM "+req.table+" WHERE sno='"+req.sno+"'";
+                console.log(sql);
+                con.query(sql,function(err,result,fields){
+                    if (err) throw err;
+                    answer=result[0][field];
+                    console.log(answer);
+                    turn_payload={
+                        "result": "turn"
+                    };//response payload
+                    if(answer==req.answer){
+                        turn={
+                            "username":req.username,
+                            "connection":connection
+                        }
+                        connection.send(JSON.stringify(res_payload));
+                    }
+                });
+            });
         }
     });
 });

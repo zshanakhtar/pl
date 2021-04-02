@@ -45,19 +45,22 @@ $result=mysqli_query($conn,$query);
 
     <script>
         document.getElementById("question").scrollIntoView();
-        $(".btn-slect-ans").on('click',function(e) {
+        $(".btn-select-ans").on('click',function(e) {
             e.preventDefault(); // avoid to execute the actual submit of the form.
             
             var button=$(this);//get this button
-            var table=$(this).data("table");
-            var sno=$(this).data("sno");
-
+            var table=$(this).closest('.panel-body').data("table");
+            var sno=$(this).closest('.panel-body').data("sno");
+            var answer=$(this).html().trim();
+            
             var choose_payload={         
                 "action" :"answer",
                 "username" :"<?php echo $username?>",
                 "table": table,
-                "sno": sno
+                "sno": sno,
+                "answer":answer
             };
+            console.log(choose_payload);
             ws.send(JSON.stringify(choose_payload));
         });
     </script>
