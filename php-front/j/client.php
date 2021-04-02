@@ -138,6 +138,13 @@ while($question_sno<5)
             button.removeClass('available');
             $('#question').ajaxReload("get","question",data);//load question
         }
+        else if(response.result=="points"){
+            let button=$('.btn-select-ans');
+            button.attr('disabled','disabled');
+            button.addClass('btn-default');
+            button.removeClass('btn-info');
+            //$('#question').ajaxReload("get","question",data);//load question
+        }
     };
     ws.onopen = () =>{
         <?php if(isset($_SESSION['newgame']) && $_SESSION['newgame']==true){?>

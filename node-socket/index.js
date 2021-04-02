@@ -9,6 +9,7 @@ httpServer.listen(9090,()=> console.log("Listening .. on 9090")) //
 var clients={};//hashmap of clienid and connection
 const games={};//hashmap which contains game id and no. of balls ,state of game
 var turn;
+var q_available;
 
 const wsServer  = new websocketServer({        //the http socket is added to the websocket object
     "httpServer":httpServer
@@ -76,6 +77,7 @@ wsServer.on("request",request=>{
         else if(req.action=='choose'){
             console.log(req);
             if(turn.username==req.username){
+                q_available=true;
                 for(var i=0;i<clients.length;i++){
                     var res_payload={
                         "result":"question",
@@ -86,7 +88,7 @@ wsServer.on("request",request=>{
                 }
             }
         }
-        else if(req.action=='answer'){
+        else if(req.action=='answer' && q_available){
             console.log(req);
             const mysql = require('mysql');
 
@@ -98,7 +100,7 @@ wsServer.on("request",request=>{
             });
             con.connect(function(err){
                 if(err) throw err;
-                console.log("connected");
+                // console.log("connected");
                 var field="headline";
                 if(req.table=="editorial")
                     field="paper";
@@ -109,11 +111,11 @@ wsServer.on("request",request=>{
                 else if(req.table=="trailer")
                     field="language";
                 sql="SELECT "+field+" FROM "+req.table+" WHERE sno='"+req.sno+"'";
-                console.log(sql);
+                // console.log(sql);
                 con.query(sql,function(err,result,fields){
                     if (err) throw err;
                     answer=result[0][field];
-                    console.log(answer);
+                    // console.log(answer);
                     turn_payload={
                         "result": "turn"
                     };//response payload
@@ -122,7 +124,18 @@ wsServer.on("request",request=>{
                             "username":req.username,
                             "connection":connection
                         }
-                        connection.send(JSON.stringify(res_payload));
+                        // console.log(turn);
+                        q_available=false;
+                        for(var i=0;i<clients.length;i++){
+                            var points_payload={
+                                "result":"points",
+                                "username":req.username,
+                                "points":"100"
+                            };
+                            if(turn.username==clients[i].username)
+                                clients[i].connection.send(JSON.stringify(turn_payload));//send question id to all clients
+                            clients[i].connection.send(JSON.stringify(points_payload));//send question id to all clients
+                        }
                     }
                 });
             });
