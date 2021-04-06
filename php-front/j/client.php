@@ -12,6 +12,15 @@ $result_trailer=mysqli_query($conn,$query_trailer);
 extract($_SESSION);
 ?>
 <div class="panel panel-info">
+	<div class="panel-heading text-center" data-toggle="collapse" data-target="#clients" style="font-size:150%;"><b>Players</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
+	<div  class="panel-body collapse in one" id="clients">
+        <div id="client-template" class="panel panel-danger col-sm-2 hidden">
+            <div class="panel-heading text-center"></div>
+            <div class="panel-body text-center"></div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-info">
 	<div class="panel-heading text-center" data-toggle="collapse" data-target="#headlines" style="font-size:150%;"><b>Select Question</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
 	<div  class="panel-body collapse in one" id="headlines">
         <table class="table table-bordered table-striped">
@@ -125,6 +134,12 @@ while($question_sno<5)
         console.log(response);
         if(response.result=="joined"){
             $('.btn-select-q').addClass('available');
+            var client=$('#client-template').clone();
+            console.log(client);
+            client.removeClass('hidden');
+            client.find('.panel-heading').append(response.username);
+            client.find('.panel-body').append(100);
+            $('#clients').append(client);
         }
         else if(response.result=="turn"){
             $('.available').removeAttr('disabled');//activate available questions
