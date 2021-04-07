@@ -160,6 +160,15 @@ while($question_sno<5)
             option_buttons.removeClass('btn-info');
             if(response.username!="<?php echo $username;?>")
                 $('.available').attr('disabled','disabled');//disabling questions
+            let clientnames=$("#clients").find('.panel-heading');
+            for(var i=0;i<clientnames.length;i++){
+                if($(clientnames[i]).html()==response.username){
+                    var points=parseInt($(clientnames[i]).siblings('.panel-body').html());//get current points
+                    points+=parseInt(response.points);
+                    $(clientnames[i]).siblings('.panel-body').html(points);
+                    console.log(clientnames[i]);
+                }
+            }
             // console.log(option_buttons);
             //$('#question').ajaxReload("get","question",data);//load question
         }
