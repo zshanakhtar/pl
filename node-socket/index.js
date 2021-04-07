@@ -6,10 +6,20 @@ const websocketServer = require("websocket").server // websocket is a library.Th
 const httpServer = http.createServer();
 httpServer.listen(9090,()=> console.log("Listening .. on 9090")) //
 
-var clients={};//hashmap of clienid and connection
+const mysql = require('mysql');
+
+var dbcon =mysql.createConnection({
+    host:"localhost",
+    user:"root",
+    password:"",
+    database:"labassignment"
+});
+
+var clients=[];//hashmap of clienid and connection
 const games={};//hashmap which contains game id and no. of balls ,state of game
 var turn;
 var q_available;
+var questions={};
 
 const wsServer  = new websocketServer({        //the http socket is added to the websocket object
     "httpServer":httpServer
@@ -19,13 +29,57 @@ const wsServer  = new websocketServer({        //the http socket is added to the
 wsServer.on("request",request=>{
     connection=request.accept(null,request.origin);//get TCP connection for each client ,connect function for client
     connection.on("open",()=> console.log("opened"));
-    connection.on("close",()=> console.log("closed"));
+    
+    connection.on("close",()=> {
+        for(var i=0;i<clients.length;i++){
+            if(!clients[i].connection.connected){
+                // console.log(i);
+                console.log(clients[i].username+" disconnected");
+                clients.splice(i,1);
+            }
+        }
+        console.log(clients);
+    });
 
     connection.on("message",message=>{
         //I have received a messsage from client
         const req=JSON.parse(message.utf8Data)
         if(req.action === 'create')
         {
+
+
+
+            dbcon.connect(function(err){
+                if(err) throw err;
+                // console.log("connected");
+                
+                sql_editorial="SELECT sno,paper as answer from editorial LIMIT 5";
+                sql_followsports="SELECT sno,sport as answer from followsports LIMIT 5";
+                sql_technology="SELECT sno,category as answer from technology LIMIT 5";
+                sql_trailer="SELECT sno,language as answer from trailer LIMIT 5";
+                // console.log(sql);
+                dbcon.query(sql_editorial,function(err,result,fields){
+                    if (err) throw err;
+                    questions.editorial=result;
+                });
+                dbcon.query(sql_followsports,function(err,result,fields){
+                    if (err) throw err;
+                    questions.followsports=result;
+                });
+                dbcon.query(sql_technology,function(err,result,fields){
+                    if (err) throw err;
+                    questions.technology=result;
+                });
+                dbcon.query(sql_trailer,function(err,result,fields){
+                    if (err) throw err;
+                    questions.trailer=result;
+                });
+                // console.log(questions);
+            });
+
+
+
+
             gamecode=req.gamecode;
             games[gamecode]={
                 "id":gamecode,
@@ -43,21 +97,24 @@ wsServer.on("request",request=>{
         else if(req.action === 'join')
         {
             gamecode=req.gamecode;
-            if(games[gamecode].clients.length==0){
+            // console.log("before join");
+            // console.log(clients);
+            if(clients.length==0){
                 turn={
                     "username":req.username,
                     "connection":connection
                 }
             }
-            if(games[gamecode].clients.length<6){
+            if(clients.length<6){
 
                 //console.log(games);
                 const client={
                     'username':req.username,
                     'connection':connection
                 };
-                clients=games[gamecode].clients;
+                
                 clients.push(client);
+                console.log("after join");
                 console.log(clients);
                 res_payload={
                     "result": "joined",
@@ -90,55 +147,40 @@ wsServer.on("request",request=>{
         }
         else if(req.action=='answer' && q_available){
             console.log(req);
-            const mysql = require('mysql');
+            turn_payload={
+                "result": "turn"
+            };//response payload
+            var questions_table=questions[req.table];
+            // console.log(questions_table);
+            var answer,points=0;
+            for(var i=0;i<questions_table.length;i++){
+                var question=questions_table[i];
+                if(question.sno==req.sno){
+                    answer=question.answer;
+                    points=(i+1)*100;
+                    break;
+                }
+            }
 
-            var con =mysql.createConnection({
-                host:"localhost",
-                user:"root",
-                password:"",
-                database:"labassignment"
-            });
-            con.connect(function(err){
-                if(err) throw err;
-                // console.log("connected");
-                var field="headline";
-                if(req.table=="editorial")
-                    field="paper";
-                else if(req.table=="followsports")
-                    field="sport";
-                else if(req.table=="technology")
-                    field="category";
-                else if(req.table=="trailer")
-                    field="language";
-                sql="SELECT "+field+" FROM "+req.table+" WHERE sno='"+req.sno+"'";
-                // console.log(sql);
-                con.query(sql,function(err,result,fields){
-                    if (err) throw err;
-                    answer=result[0][field];
-                    // console.log(answer);
-                    turn_payload={
-                        "result": "turn"
-                    };//response payload
-                    if(answer==req.answer){
-                        turn={
-                            "username":req.username,
-                            "connection":connection
-                        }
-                        // console.log(turn);
-                        q_available=false;
-                        for(var i=0;i<clients.length;i++){
-                            var points_payload={
-                                "result":"points",
-                                "username":req.username,
-                                "points":"100"
-                            };
-                            if(turn.username==clients[i].username)
-                                clients[i].connection.send(JSON.stringify(turn_payload));//send question id to all clients
-                            clients[i].connection.send(JSON.stringify(points_payload));//send question id to all clients
-                        }
-                    }
-                });
-            });
+            // console.log(answer);
+            if(answer==req.answer){
+                turn={
+                    "username":req.username,
+                    "connection":connection
+                }
+                // console.log(turn);
+                q_available=false;
+                for(var i=0;i<clients.length;i++){
+                    var points_payload={
+                        "result":"points",
+                        "username":req.username,
+                        "points":points
+                    };
+                    if(turn.username==clients[i].username)
+                        clients[i].connection.send(JSON.stringify(turn_payload));//send question id to all clients
+                    clients[i].connection.send(JSON.stringify(points_payload));//send question id to all clients
+                }
+            }
         }
     });
 });

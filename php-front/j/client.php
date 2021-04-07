@@ -142,6 +142,7 @@ while($question_sno<5)
             $('#clients').append(client);
         }
         else if(response.result=="turn"){
+            document.getElementById("headlines").scrollIntoView();
             $('.available').removeAttr('disabled');//activate available questions
         }
         else if(response.result=="question"){
@@ -154,19 +155,24 @@ while($question_sno<5)
             $('#question').ajaxReload("get","question",data);//load question
         }
         else if(response.result=="points"){
+            
+            if(response.username!="<?php echo $username;?>"){
+                $('.available').attr('disabled','disabled');//disabling questions
+                document.getElementById("clients").scrollIntoView();
+            }
+
             let option_buttons=$('.btn-select-ans');
             option_buttons.attr('disabled','disabled');
             option_buttons.addClass('btn-default');
             option_buttons.removeClass('btn-info');
-            if(response.username!="<?php echo $username;?>")
-                $('.available').attr('disabled','disabled');//disabling questions
-            let clientnames=$("#clients").find('.panel-heading');
-            for(var i=0;i<clientnames.length;i++){
-                if($(clientnames[i]).html()==response.username){
-                    var points=parseInt($(clientnames[i]).siblings('.panel-body').html());//get current points
+            
+            let clients=$("#clients").find('.panel-heading');
+            for(var i=0;i<clients.length;i++){
+                if($(clients[i]).html()==response.username){
+                    var points=parseInt($(clients[i]).siblings('.panel-body').html());//get current points
                     points+=parseInt(response.points);
-                    $(clientnames[i]).siblings('.panel-body').html(points);
-                    console.log(clientnames[i]);
+                    $(clients[i]).siblings('.panel-body').html(points);
+                    // console.log(clientnames[i]);
                 }
             }
             // console.log(option_buttons);
