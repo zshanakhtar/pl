@@ -14,9 +14,11 @@ extract($_SESSION);
 <div class="panel panel-info">
 	<div class="panel-heading text-center" data-toggle="collapse" data-target="#clients" style="font-size:150%;"><b>Players</b><span class="btn btn-info pull-right glyphicon glyphicon-chevron-up"></span></div>
 	<div  class="panel-body collapse in one" id="clients">
-        <div id="client-template" class="panel panel-danger col-sm-2 hidden">
-            <div class="panel-heading text-center"></div>
-            <div class="panel-body text-center"></div>
+        <div id="client-template" class="col-sm-2 hidden">
+            <div class="panel panel-danger">
+                <div class="panel-heading text-center"></div>
+                <div class="panel-body text-center"></div>
+            </div>
         </div>
     </div>
 </div>

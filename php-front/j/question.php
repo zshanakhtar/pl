@@ -56,8 +56,6 @@ $result=mysqli_query($conn,$query);
             var choose_payload={         
                 "action" :"answer",
                 "username" :"<?php echo $username?>",
-                "table": table,
-                "sno": sno,
                 "answer":answer
             };
             console.log(choose_payload);

@@ -17,8 +17,13 @@ var dbcon =mysql.createConnection({
 
 var clients=[];//hashmap of clienid and connection
 const games={};//hashmap which contains game id and no. of balls ,state of game
+
 var turn;
-var q_available;
+
+var q_table;//selection question details
+var q_sno;//selection question details
+var q_available;//selection question details
+
 var questions={};
 
 const wsServer  = new websocketServer({        //the http socket is added to the websocket object
@@ -134,6 +139,8 @@ wsServer.on("request",request=>{
         else if(req.action=='choose'){
             console.log(req);
             if(turn.username==req.username){
+                q_table=req.table;
+                q_sno=req.sno;
                 q_available=true;
                 for(var i=0;i<clients.length;i++){
                     var res_payload={
@@ -150,12 +157,12 @@ wsServer.on("request",request=>{
             turn_payload={
                 "result": "turn"
             };//response payload
-            var questions_table=questions[req.table];
+            var questions_table=questions[q_table];
             // console.log(questions_table);
             var answer,points=0;
             for(var i=0;i<questions_table.length;i++){
                 var question=questions_table[i];
-                if(question.sno==req.sno){
+                if(question.sno==q_sno){
                     answer=question.answer;
                     points=(i+1)*100;
                     break;
