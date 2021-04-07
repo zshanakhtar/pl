@@ -138,7 +138,7 @@ while($question_sno<5)
             console.log(client);
             client.removeClass('hidden');
             client.find('.panel-heading').append(response.username);
-            client.find('.panel-body').append(100);
+            client.find('.panel-body').append(0);
             $('#clients').append(client);
         }
         else if(response.result=="turn"){
@@ -154,10 +154,13 @@ while($question_sno<5)
             $('#question').ajaxReload("get","question",data);//load question
         }
         else if(response.result=="points"){
-            let button=$('.btn-select-ans');
-            button.attr('disabled','disabled');
-            button.addClass('btn-default');
-            button.removeClass('btn-info');
+            let option_buttons=$('.btn-select-ans');
+            option_buttons.attr('disabled','disabled');
+            option_buttons.addClass('btn-default');
+            option_buttons.removeClass('btn-info');
+            if(response.username!="<?php echo $username;?>")
+                $('.available').attr('disabled','disabled');//disabling questions
+            // console.log(option_buttons);
             //$('#question').ajaxReload("get","question",data);//load question
         }
     };

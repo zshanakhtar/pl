@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['gamecode']) || !isset($_SESSION['username'])) { // if gamecode and username is not set
-  header("location: index..php");
+  header("location: index.php");
 }
 else{
   extract($_SESSION);
