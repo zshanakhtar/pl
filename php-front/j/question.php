@@ -8,18 +8,35 @@ $result=mysqli_query($conn,$query);
         if($table=='trailer'){
             $ques=$title;
             $option[$i]=$language;
-        }
+            $field='language';
+            }
         else if($table=='editorial'){
             $ques=$headline;
             $option[$i]=$paper;
+            $field='paper';
         }
         else if($table=='followsports'){
             $ques=$headline;
             $option[$i]=$sport;
+            $field='sport';
         }
         else if($table=='technology'){
             $ques=$headline;
             $option[$i]=$category;
+            $field='category';
+        }
+
+        $query="SELECT DISTINCT $field from $table WHERE $field!='$option[$i]' LIMIT 3";
+        $result=mysqli_query($conn,$query);
+        $j=0;
+        while($row = $result->fetch_assoc()){
+            if($j!=$i){
+                $option[$j]=$row[$field];
+            }
+            else{
+                $option[++$j]=$row[$field];
+            }
+            $j++;
         }
 ?>
 
