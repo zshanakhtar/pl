@@ -18,6 +18,8 @@ var dbcon =mysql.createConnection({
 var clients=[];//hashmap of clienid and connection
 const games={};//hashmap which contains game id and no. of balls ,state of game
 
+var join_available=false;
+var choose_available=false;
 var turn;
 
 var q_table;//selection question details
@@ -49,10 +51,21 @@ wsServer.on("request",request=>{
     connection.on("message",message=>{
         //I have received a messsage from client
         const req=JSON.parse(message.utf8Data)
+        
         if(req.action === 'create')
         {
 
+            join_available=true;
+            setTimeout(()=>{
+                join_available=false;
 
+                if(clients.length>1){
+                    choose_available=true;
+                }
+                
+                //write code to handle when clients length <2 even after joining time over
+
+            },0.5*60*1000);//minute*second*millisecond
 
             dbcon.connect(function(err){
                 if(err) throw err;
@@ -94,21 +107,25 @@ wsServer.on("request",request=>{
                 "result": "created"
             };//response payload
             connection.send(JSON.stringify(res_payload));
+
             res_payload={
                 "result": "turn"
             };//response payload
+            // console.log(turn.username);
             connection.send(JSON.stringify(res_payload));
+            
         }
-        else if(req.action === 'join')
+        else if(join_available && req.action === 'join')
         {
             gamecode=req.gamecode;
             // console.log("before join");
             // console.log(clients);
             if(clients.length==0){
-                turn={
-                    "username":req.username,
-                    "connection":connection
-                }
+                // setTimeout(()=>{
+                    turn={
+                        "username":req.username
+                    }
+                // },0.5*60*999);
             }
             if(clients.length<6){
 
@@ -135,9 +152,13 @@ wsServer.on("request",request=>{
                     clients[i].connection.send(JSON.stringify(res_payload));//send new client details to existing clients
                 }
             }
+            
         }
-        else if(req.action=='choose'){
+        else if(choose_available && req.action=='choose'){
             console.log(req);
+            
+            choose_available=false;//disable sending more question choices
+            
             if(turn.username==req.username){
                 q_table=req.table;
                 q_sno=req.sno;
@@ -151,6 +172,7 @@ wsServer.on("request",request=>{
                     clients[i].connection.send(JSON.stringify(res_payload));//send question id to all clients
                 }
             }
+            
         }
         else if(req.action=='answer' && q_available){
             console.log(req);
@@ -171,6 +193,9 @@ wsServer.on("request",request=>{
 
             // console.log(answer);
             if(answer==req.answer){
+
+                choose_available=true;
+
                 turn={
                     "username":req.username,
                     "connection":connection
