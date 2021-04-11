@@ -18,8 +18,9 @@ var dbcon =mysql.createConnection({
 var clients=[];//hashmap of clienid and connection
 const games={};//hashmap which contains game id and no. of balls ,state of game
 
-var join_available=false;
-var choose_available=false;
+var join_available=false;//determine whether joining is allowed
+var choose_available=false;//determine whether choosing question is allowed
+var answer_available={};//determine which client can still answer chosen question
 var turn;
 
 var q_table;//selection question details
@@ -62,7 +63,7 @@ wsServer.on("request",request=>{
                 if(clients.length>1){
                     choose_available=true;
                 }
-                
+
                 //write code to handle when clients length <2 even after joining time over
 
             },0.5*60*1000);//minute*second*millisecond
@@ -159,6 +160,9 @@ wsServer.on("request",request=>{
             
             choose_available=false;//disable sending more question choices
             
+            for(var i=0;i<clients.length;i++)
+                answer_available[clients[i].username]=true;
+
             if(turn.username==req.username){
                 q_table=req.table;
                 q_sno=req.sno;
@@ -174,7 +178,7 @@ wsServer.on("request",request=>{
             }
             
         }
-        else if(req.action=='answer' && q_available){
+        else if(q_available && answer_available[req.username] && req.action=='answer'){
             console.log(req);
             turn_payload={
                 "result": "turn"
@@ -211,6 +215,44 @@ wsServer.on("request",request=>{
                     if(turn.username==clients[i].username)
                         clients[i].connection.send(JSON.stringify(turn_payload));//send question id to all clients
                     clients[i].connection.send(JSON.stringify(points_payload));//send question id to all clients
+                }
+            }
+            else{
+                //if answer incorrect
+                answer_available[req.username]=false;
+                var clients_remaining=false;
+                for(var i=0;i<clients.length;i++)
+                    if(answer_available[clients[i].username])
+                        clients_remaining=true;
+                
+                console.log(clients_remaining);
+                if(!clients_remaining){
+                    var turn_set=false;
+                    choose_available=true;
+                    for(var i=0;i<clients.length;i++){
+                        var points_payload={
+                            "result":"points",
+                            "points":0
+                        };
+                        clients[i].connection.send(JSON.stringify(points_payload));//send question id to all clients
+                        if(!turn_set && turn.username==clients[i].username){
+                            if(i==clients.length-1){
+                                turn={
+                                    "username":clients[0].username,
+                                    "connection":clients[0].connection
+                                }
+                                clients[0].connection.send(JSON.stringify(turn_payload));//send question id to all clients
+                            }
+                            else{
+                                turn={
+                                    "username":clients[i+1].username,
+                                    "connection":clients[i+1].connection
+                                }
+                                clients[i+1].connection.send(JSON.stringify(turn_payload));//send question id to all clients
+                            }
+                            turn_set=true;
+                        }
+                    }
                 }
             }
         }
