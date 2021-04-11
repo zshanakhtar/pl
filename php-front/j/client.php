@@ -158,7 +158,7 @@ while($question_sno<5)
         }
         else if(response.result=="points"){
             
-            if(response.username!="<?php echo $username;?>"){
+            if(response.points!=0 && response.username!="<?php echo $username;?>"){
                 $('.available').attr('disabled','disabled');//disabling questions
                 document.getElementById("clients").scrollIntoView();
             }
@@ -212,6 +212,8 @@ while($question_sno<5)
             "table": $(inputs[0]).attr('value'),
             "sno": $(inputs[1]).attr('value')
         };
+        $('.available').attr('disabled','disabled');//disabling questions
+        document.getElementById("clients").scrollIntoView();
         ws.send(JSON.stringify(choose_payload));
     });
 </script>
