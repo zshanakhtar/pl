@@ -66,8 +66,8 @@ $result=mysqli_query($conn,$query);
             e.preventDefault(); // avoid to execute the actual submit of the form.
             
             var button=$(this);//get this button
-            var table=$(this).closest('.panel-body').data("table");
-            var sno=$(this).closest('.panel-body').data("sno");
+            // var table=$(this).closest('.panel-body').data("table");
+            // var sno=$(this).closest('.panel-body').data("sno");
             var answer=$(this).html().trim();
             
             var choose_payload={         
